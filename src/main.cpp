@@ -190,7 +190,7 @@ int main()
                     std::cout << "1. Predict Results" << std::endl;
                     std::cout << "2. Suggest Teacher Substitutions" << std::endl;
                     std::cout << "3. Progress a Term" << std::endl;
-                    std::cout << "4. Progress Report" << std::endl;
+                    std::cout << "4. Graphs" << std::endl;
                     std::cout << "5. Return" << std::endl;
                     std::cin >> mainSelect4;
                     switch(mainSelect4)
@@ -229,7 +229,6 @@ int main()
                         {
                             system("cls");
                             myClassroom.progressReport();
-                            system("pause");
                             system("cls");
                             break;
                         }

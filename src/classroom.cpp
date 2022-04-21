@@ -842,19 +842,125 @@ void classroom::progressReport()
     predictResults();
     std::vector<int> currentTermInfo = {term, tempPredictedPassRate, tempPredictedMathsPassRate, tempPredictedEngPassRate, tempPredictedPePassRate};
     termsInfo.push_back(currentTermInfo);
-    //std::cout << termsInfo[0][0] << " " << termsInfo[0][1] << " " << termsInfo[0][2] << " " << termsInfo[0][3] << " " << termsInfo[0][4] <<std::endl;
 
     int col = term + 1;
-    int max = 100;
+    int max = 25;    
 
-    for(int r = 0; r < max; ++r)
+    char graphSelect = '0';
+    while(graphSelect != '5')
     {
-        for(int c = 0; c < col; ++c)
-        {
-            std::cout << (r + termsInfo[c][1] >= max ? " ** " : "    ");
-        }
+        std::cout << " __ _  _  _     __" << std::endl;
+        std::cout << "/__|_)|_||_)|_|(_ " << std::endl;
+        std::cout << "\\_|| \\| ||  | |__)" << std::endl;
         std::cout << std::endl;
+        std::cout << "1. Pass Rate" << std::endl;
+        std::cout << "2. Maths Pass Rate" << std::endl;
+        std::cout << "3. English Pass Rate" << std::endl;
+        std::cout << "4. PE Pass Rate" << std::endl;
+        std::cout << "5. Return" << std::endl;
+        std::cin >> graphSelect;
+        switch(graphSelect)
+        {
+            case '1':
+            {
+                system("cls");
+                std::cout << " _  _  __ __    _  _ ___ __" << std::endl;
+                std::cout << "|_)|_|(_ (_    |_)|_| | |_ " << std::endl;
+                std::cout << "|  | |__)__)   | \\| | | |__" << std::endl;
+                for(int r = 0; r < max; ++r)
+                {
+                    for(int c = 0; c < col; ++c)
+                    {
+                        std::cout << (r + ((termsInfo[c][1])/4) >= max ? " ** " : "    ");
+                    }
+                    std::cout << std::endl;
+                }
+                std::cout << " 1  " << " 2  " << " 3  " << " 4  " << " 5  " << " 6  " << " 7  " << " 8  " << " 9  " << " 10 " << std::endl;
+                std::cout << std::setw(22) << "Terms" << std::endl;
+                std::cout << std::setw(25) << "('**' = 4%)" << std::endl;
+                std::cout << std::endl;
+                system("pause");
+                system("cls");
+                break;
+            }
+            case '2':
+            {
+                system("cls");
+                std::cout << "    _ ___    __    _  _  __ __    _  _ ___ __" << std::endl;
+                std::cout << "|V||_| | |_|(_    |_)|_|(_ (_    |_)|_| | |_ " << std::endl;
+                std::cout << "| || | | | |__)   |  | |__)__)   | \\| | | |__" << std::endl;
+                for(int r = 0; r < max; ++r)
+                {
+                    for(int c = 0; c < col; ++c)
+                    {
+                        std::cout << (r + ((termsInfo[c][2])/4) >= max ? " ** " : "    ");
+                    }
+                    std::cout << std::endl;
+                }
+                std::cout << " 1  " << " 2  " << " 3  " << " 4  " << " 5  " << " 6  " << " 7  " << " 8  " << " 9  " << " 10 " << std::endl;
+                std::cout << std::setw(22) << "Terms" << std::endl;
+                std::cout << std::setw(25) << "('**' = 4%)" << std::endl;
+                std::cout << std::endl;
+                system("pause");
+                system("cls");
+                break;
+            }
+            case '3':
+            {
+                system("cls");
+                std::cout << " __    __   ___ __       _  _  __ __    _  _ ___ __" << std::endl;
+                std::cout << "|_ |\\|/__|   | (_ |_|   |_)|_|(_ (_    |_)|_| | |_ " << std::endl;
+                std::cout << "|__| |\\_||___|___)| |   |  | |__)__)   | \\| | | |__" << std::endl;
+                for(int r = 0; r < max; ++r)
+                {
+                    for(int c = 0; c < col; ++c)
+                    {
+                        std::cout << (r + ((termsInfo[c][3])/4) >= max ? " ** " : "    ");
+                    }
+                    std::cout << std::endl;
+                }
+                std::cout << " 1  " << " 2  " << " 3  " << " 4  " << " 5  " << " 6  " << " 7  " << " 8  " << " 9  " << " 10 " << std::endl;
+                std::cout << std::setw(22) << "Terms" << std::endl;
+                std::cout << std::setw(25) << "('**' = 4%)" << std::endl;
+                std::cout << std::endl;
+                system("pause");
+                system("cls");
+                break;
+            }
+            case '4':
+            {
+                system("cls");
+                std::cout << " _  __    _  _  __ __    _  _ ___ __" << std::endl;
+                std::cout << "|_)|_    |_)|_|(_ (_    |_)|_| | |_ " << std::endl;
+                std::cout << "|  |__   |  | |__)__)   | \\| | | |__" << std::endl;
+                for(int r = 0; r < max; ++r)
+                {
+                    for(int c = 0; c < col; ++c)
+                    {
+                        std::cout << (r + ((termsInfo[c][4])/4) >= max ? " ** " : "    ");
+                    }
+                    std::cout << std::endl;
+                }
+                std::cout << " 1  " << " 2  " << " 3  " << " 4  " << " 5  " << " 6  " << " 7  " << " 8  " << " 9  " << " 10 " << std::endl;
+                std::cout << std::setw(22) << "Terms" << std::endl;
+                std::cout << std::setw(25) << "('**' = 4%)" << std::endl;
+                std::cout << std::endl;
+                system("pause");
+                system("cls");
+                break;
+            }
+            case '5':
+            {
+                system("cls");
+                break;
+            }
+            default:
+            {
+                system("cls");
+                std::cout << "Invalid Entry: Use 1,2,3,4 to Select Option" << std::endl;
+                std::cout << " " << std::endl;
+            }
+        }    
     }
-
     termsInfo = holdTermsInfo;
 }
