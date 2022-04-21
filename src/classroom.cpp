@@ -8,6 +8,7 @@
 #include <fstream>
 #include <iomanip>
 #include <algorithm>
+#include <numeric>
 
 void classroom::addTeacher()
 {
@@ -727,22 +728,39 @@ void classroom::makeTeacherSubRecommendations()
     teacher tempHoldClassroomTeacher = classroomTeacher;
     std::vector<student> tempHoldStudents = students;
 
-    std::vector<int> passRateVector;
-    std::vector<int> mathsPassRateVector;
-    std::vector<int> engPassRateVector;
-    std::vector<int> pePassRateVector;
+    std::vector<int> teacherCasuedAverageChange;
+    std::vector<int> teacherCasuedIqChange;
+    std::vector<int> teacherCasuedEiChange;
+    std::vector<int> teacherCasuedFitnessChange;
+    
     for(int i = 0; i < teachers.size(); i++)
     {
         classroomTeacher = teachers[i];
+
+        int averageChange = 0;
+        int iqChange = 0;
+        int eiChange = 0;
+        int fitnessChange = 0;
+
         progressTerm();
-        predictResults();
-        passRateVector.push_back(tempPredictedPassRate);
-        mathsPassRateVector.push_back(tempPredictedMathsPassRate);
-        engPassRateVector.push_back(tempPredictedEngPassRate);
-        pePassRateVector.push_back(tempPredictedPePassRate);
+        for(int j = 0; j < students.size(); j++)
+        {
+            averageChange = averageChange + ((students[j].getIQ() + students[j].getEI() + students[j].getFitness()) / 3) 
+                          - ((tempHoldStudents[j].getIQ() + tempHoldStudents[j].getEI() + tempHoldStudents[j].getFitness()) / 3);
+
+            
+            iqChange = iqChange + (students[j].getIQ() - tempHoldStudents[j].getIQ());
+            eiChange = eiChange + (students[j].getEI() - tempHoldStudents[j].getEI());
+            fitnessChange = fitnessChange + (students[j].getFitness() - tempHoldStudents[j].getFitness());
+
+        }
+
+        teacherCasuedAverageChange.push_back(averageChange);
+        teacherCasuedIqChange.push_back(iqChange);
+        teacherCasuedEiChange.push_back(eiChange);
+        teacherCasuedFitnessChange.push_back(fitnessChange);
+
         students = tempHoldStudents;
-        // std::cout << tempPredictedPassRate << " " << tempPredictedMathsPassRate << " " <<  tempPredictedEngPassRate
-        // << " " << tempPredictedPePassRate <<std::endl;
     }
     std::cout << " _  __ __ _        __    _  __ _     __    _  __" << std::endl;
     std::cout << "|_)|_ /  / \\|V||V||_ |\\|| \\|_ | \\   (_ | ||_)(_ " << std::endl;
@@ -750,12 +768,12 @@ void classroom::makeTeacherSubRecommendations()
     std::cout << std::endl;
 
 
-    int maxPass = *max_element(passRateVector.begin(), passRateVector.end());
+    int maxPass = *max_element(teacherCasuedAverageChange.begin(), teacherCasuedAverageChange.end());
     std::cout << "For **Average** Pass Rate: " << std::endl;
     std::cout << std::endl;
     for(int i = 0; i < teachers.size(); i++)
     {
-        if(passRateVector[i] == maxPass)
+        if(teacherCasuedAverageChange[i] == maxPass)
         {
             std::cout << std::setw(49) << teachers[i].getName() << std::endl;
         }
@@ -764,10 +782,10 @@ void classroom::makeTeacherSubRecommendations()
 
     std::cout << "For **Maths** Pass Rate: " << std::endl;
     std::cout << std::endl;
-    int maxMathsPass = *max_element(mathsPassRateVector.begin(), mathsPassRateVector.end());
+    int maxMathsPass = *max_element(teacherCasuedIqChange.begin(), teacherCasuedIqChange.end());
     for(int i = 0; i < teachers.size(); i++)
     {
-        if(mathsPassRateVector[i] == maxMathsPass)
+        if(teacherCasuedIqChange[i] == maxMathsPass)
         {
             std::cout << std::setw(49) << teachers[i].getName() << std::endl;
         }
@@ -776,10 +794,10 @@ void classroom::makeTeacherSubRecommendations()
 
     std::cout << "For **English** Pass Rate: " << std::endl;
     std::cout << std::endl;
-    int maxEngPass = *max_element(engPassRateVector.begin(), engPassRateVector.end());
+    int maxEngPass = *max_element(teacherCasuedEiChange.begin(), teacherCasuedEiChange.end());
     for(int i = 0; i < teachers.size(); i++)
     {
-        if(engPassRateVector[i] == maxEngPass)
+        if(teacherCasuedEiChange[i] == maxEngPass)
         {
             std::cout << std::setw(49) << teachers[i].getName() << std::endl;
         }
@@ -788,10 +806,10 @@ void classroom::makeTeacherSubRecommendations()
 
     std::cout << "For **PE** Pass Rate: " << std::endl;
     std::cout << std::endl;
-    int maxPePass = *max_element(pePassRateVector.begin(), pePassRateVector.end());
+    int maxPePass = *max_element(teacherCasuedFitnessChange.begin(), teacherCasuedFitnessChange.end());
     for(int i = 0; i < teachers.size(); i++)
     {
-        if(pePassRateVector[i] == maxPePass)
+        if(teacherCasuedFitnessChange[i] == maxPePass)
         {
             std::cout << std::setw(49) << teachers[i].getName() << std::endl;
         }
@@ -836,7 +854,7 @@ void classroom::makeTeacherSubRecommendations()
     while(suggestSelect != 'y' && suggestSelect != 'n');
 }
 
-void classroom::progressReport()
+void classroom::progressGraph()
 {
     std::vector<std::vector<int>> holdTermsInfo = termsInfo;
     predictResults();
@@ -867,6 +885,7 @@ void classroom::progressReport()
                 std::cout << " _  _  __ __    _  _ ___ __" << std::endl;
                 std::cout << "|_)|_|(_ (_    |_)|_| | |_ " << std::endl;
                 std::cout << "|  | |__)__)   | \\| | | |__" << std::endl;
+                std::cout << std::endl;
                 for(int r = 0; r < max; ++r)
                 {
                     for(int c = 0; c < col; ++c)
@@ -875,9 +894,9 @@ void classroom::progressReport()
                     }
                     std::cout << std::endl;
                 }
-                std::cout << " 1  " << " 2  " << " 3  " << " 4  " << " 5  " << " 6  " << " 7  " << " 8  " << " 9  " << " 10 " << std::endl;
-                std::cout << std::setw(22) << "Terms" << std::endl;
-                std::cout << std::setw(25) << "('**' = 4%)" << std::endl;
+                std::cout << " 1  " << " 2  " << " 3  " << " 4  " << " 5  " << " 6  " << " 7  " << " 8  " << " 9  " << " 10 " << " 11 " << " 12 " << std::endl;
+                std::cout << std::setw(27) << "Terms" << std::endl;
+                std::cout << std::setw(30) << "('**' = 4%)" << std::endl;
                 std::cout << std::endl;
                 system("pause");
                 system("cls");
@@ -889,6 +908,7 @@ void classroom::progressReport()
                 std::cout << "    _ ___    __    _  _  __ __    _  _ ___ __" << std::endl;
                 std::cout << "|V||_| | |_|(_    |_)|_|(_ (_    |_)|_| | |_ " << std::endl;
                 std::cout << "| || | | | |__)   |  | |__)__)   | \\| | | |__" << std::endl;
+                std::cout << std::endl;
                 for(int r = 0; r < max; ++r)
                 {
                     for(int c = 0; c < col; ++c)
@@ -897,9 +917,9 @@ void classroom::progressReport()
                     }
                     std::cout << std::endl;
                 }
-                std::cout << " 1  " << " 2  " << " 3  " << " 4  " << " 5  " << " 6  " << " 7  " << " 8  " << " 9  " << " 10 " << std::endl;
-                std::cout << std::setw(22) << "Terms" << std::endl;
-                std::cout << std::setw(25) << "('**' = 4%)" << std::endl;
+                std::cout << " 1  " << " 2  " << " 3  " << " 4  " << " 5  " << " 6  " << " 7  " << " 8  " << " 9  " << " 10 " << " 11 " << " 12 " << std::endl;
+                std::cout << std::setw(27) << "Terms" << std::endl;
+                std::cout << std::setw(30) << "('**' = 4%)" << std::endl;
                 std::cout << std::endl;
                 system("pause");
                 system("cls");
@@ -911,6 +931,7 @@ void classroom::progressReport()
                 std::cout << " __    __   ___ __       _  _  __ __    _  _ ___ __" << std::endl;
                 std::cout << "|_ |\\|/__|   | (_ |_|   |_)|_|(_ (_    |_)|_| | |_ " << std::endl;
                 std::cout << "|__| |\\_||___|___)| |   |  | |__)__)   | \\| | | |__" << std::endl;
+                std::cout << std::endl;
                 for(int r = 0; r < max; ++r)
                 {
                     for(int c = 0; c < col; ++c)
@@ -919,9 +940,9 @@ void classroom::progressReport()
                     }
                     std::cout << std::endl;
                 }
-                std::cout << " 1  " << " 2  " << " 3  " << " 4  " << " 5  " << " 6  " << " 7  " << " 8  " << " 9  " << " 10 " << std::endl;
-                std::cout << std::setw(22) << "Terms" << std::endl;
-                std::cout << std::setw(25) << "('**' = 4%)" << std::endl;
+                std::cout << " 1  " << " 2  " << " 3  " << " 4  " << " 5  " << " 6  " << " 7  " << " 8  " << " 9  " << " 10 " << " 11 " << " 12 " << std::endl;
+                std::cout << std::setw(27) << "Terms" << std::endl;
+                std::cout << std::setw(30) << "('**' = 4%)" << std::endl;
                 std::cout << std::endl;
                 system("pause");
                 system("cls");
@@ -933,6 +954,7 @@ void classroom::progressReport()
                 std::cout << " _  __    _  _  __ __    _  _ ___ __" << std::endl;
                 std::cout << "|_)|_    |_)|_|(_ (_    |_)|_| | |_ " << std::endl;
                 std::cout << "|  |__   |  | |__)__)   | \\| | | |__" << std::endl;
+                std::cout << std::endl;
                 for(int r = 0; r < max; ++r)
                 {
                     for(int c = 0; c < col; ++c)
@@ -941,9 +963,9 @@ void classroom::progressReport()
                     }
                     std::cout << std::endl;
                 }
-                std::cout << " 1  " << " 2  " << " 3  " << " 4  " << " 5  " << " 6  " << " 7  " << " 8  " << " 9  " << " 10 " << std::endl;
-                std::cout << std::setw(22) << "Terms" << std::endl;
-                std::cout << std::setw(25) << "('**' = 4%)" << std::endl;
+                std::cout << " 1  " << " 2  " << " 3  " << " 4  " << " 5  " << " 6  " << " 7  " << " 8  " << " 9  " << " 10 " << " 11 " << " 12 " << std::endl;
+                std::cout << std::setw(27) << "Terms" << std::endl;
+                std::cout << std::setw(30) << "('**' = 4%)" << std::endl;
                 std::cout << std::endl;
                 system("pause");
                 system("cls");
@@ -963,4 +985,9 @@ void classroom::progressReport()
         }    
     }
     termsInfo = holdTermsInfo;
+}
+
+int classroom::getTerm()
+{
+    return term;
 }

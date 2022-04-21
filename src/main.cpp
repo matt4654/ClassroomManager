@@ -6,7 +6,6 @@
 
 int main()
 {
-    //testchange
     system("cls");
     classroom myClassroom;
 
@@ -181,7 +180,7 @@ int main()
             {
                 system("cls");
                 char mainSelect4 = '0';
-                while(mainSelect4 != '5')
+                while(mainSelect4 != '6')
                 {
                     std::cout << " __    _  __ __ _  _  _       " << std::endl;
                     std::cout << "/  |  |_|(_ (_ |_)/ \\/ \\|V|   " << std::endl;
@@ -189,9 +188,10 @@ int main()
                     std::cout << std::endl;
                     std::cout << "1. Predict Results" << std::endl;
                     std::cout << "2. Suggest Teacher Substitutions" << std::endl;
-                    std::cout << "3. Progress a Term" << std::endl;
+                    std::cout << "3. Progress One Month" << std::endl;
                     std::cout << "4. Graphs" << std::endl;
-                    std::cout << "5. Return" << std::endl;
+                    std::cout << "5. Progress to End-Of-Year" << std::endl;
+                    std::cout << "6. Return" << std::endl;
                     std::cin >> mainSelect4;
                     switch(mainSelect4)
                     {
@@ -216,10 +216,17 @@ int main()
                         case '3':
                         {
                             system("cls");
-                            myClassroom.predictResults();
-                            myClassroom.setPridictedResults();
-                            myClassroom.progressTerm();
-                            std::cout << std::setw(60) << "The Classroom has Progressed a Term" << std::endl;
+                            if(myClassroom.getTerm() >= 11)
+                            {
+                                std::cout << "The Classroom has reached the end of the school year" << std::endl;
+                            }
+                            else
+                            {
+                                myClassroom.predictResults();
+                                myClassroom.setPridictedResults();
+                                myClassroom.progressTerm();
+                                std::cout << "The Classroom has Progressed a month" << std::endl;
+                            }
                             std::cout << std::endl;
                             system("pause");
                             system("cls");
@@ -228,11 +235,26 @@ int main()
                         case '4':
                         {
                             system("cls");
-                            myClassroom.progressReport();
+                            myClassroom.progressGraph();
                             system("cls");
                             break;
                         }
                         case '5':
+                        {
+                            system("cls");
+                            while(myClassroom.getTerm() < 11)
+                            {
+                                myClassroom.predictResults();
+                                myClassroom.setPridictedResults();
+                                myClassroom.progressTerm();
+                            }
+                            std::cout << "The Classroom has reached the end of the school year" << std::endl;
+                            std::cout << std::endl;
+                            system("pause");
+                            system("cls");
+                            break;
+                        }
+                        case '6':
                         {
                             system("cls");
                             break;
@@ -240,7 +262,7 @@ int main()
                         default:
                         {
                             system("cls");
-                            std::cout << "Invalid Entry: Use 1,2 to Select Option" << std::endl;
+                            std::cout << "Invalid Entry: Use 1,2,3,4,5,6 to Select Option" << std::endl;
                             std::cout << " " << std::endl;
                         }
                     }
