@@ -4,9 +4,7 @@
 #include <iostream>
 #include <iomanip>
 
-//Constructor
-
-teacher::teacher(){}; //Why did I have to create this???
+teacher::teacher(){};
 
 teacher::teacher(std::string n, int i, int e, int f, std::string d, bool s, std::string t)
 {
@@ -34,7 +32,6 @@ std::string teacher::getTeachingStyle()
     return teachingStyle;
 }
 
-//Get teahcher stats
 
 void teacher::viewTeacher()
 {

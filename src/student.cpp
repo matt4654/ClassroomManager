@@ -4,8 +4,6 @@
 #include <iostream>
 #include <iomanip>
 
-//Constructor
-
 student::student(std::string n, int i, int e, int f, std::string home, std::string breakAct, bool tORf, std::string l)
 {
     setName(n);
@@ -18,19 +16,9 @@ student::student(std::string n, int i, int e, int f, std::string home, std::stri
     learningStyle = l;
 }
 
-void student::setHomeActivity(std::string club)
-{
-    homeActivity = club;
-}
-
 std::string student::getHomeActivity()
 {
     return homeActivity;
-} 
-
-void student::setBreakActivity(std::string activity)
-{
-    breakActivity = activity;
 }
 
 std::string student::getBreakActivity()
@@ -48,6 +36,7 @@ std::string student::getLearningStyle()
     return learningStyle;
 }
 
+
 void student::viewStudent()
 {
     std::cout << std::endl;
@@ -57,27 +46,6 @@ void student::viewStudent()
     std::cout << std::setw(20) << getLearningStyle();
 }
 
-void student::setTempGrades(std::string m, std::string e, std::string p)
-{
-    tempMathsGrade = m;
-    tempEngGrade = e;
-    tempPeGrade = p;
-}
-
-std::string student::getTempMathsGrade()
-{
-    return tempMathsGrade;
-}
-
-std::string student::getTempEngGrade()
-{
-    return tempEngGrade;
-}
-
-std::string student::getTempPeGrade()
-{
-    return tempPeGrade;
-}
 
 void student::setGrades(std::string m, std::string e, std::string p)
 {

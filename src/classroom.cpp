@@ -1,4 +1,5 @@
 #include "../include/classroom.h"
+#include "../include/utilities.h"
 
 #include <iostream>
 #include <vector>
@@ -9,57 +10,26 @@
 #include <iomanip>
 #include <algorithm>
 #include <numeric>
+#include <memory>
+
 
 void classroom::addTeacher()
 {
     std::string n, d, t;
-    int i, e, f;
+    int i = 0, e = 0, f = 0;
     bool s;
     std::cout << "Enter teacher's name: ";
     std::getline(std::cin, n);
     system("cls");
-    std::cout << "Enter teacher's IQ: ";
-    while(!(std::cin >> i))
-    {
-        system("cls");
-        std::cout << "Incorrect data type. Please enter an integer" << std::endl;
-        std::cout << std::endl;
-        std::cout << "Enter teacher's IQ: ";
-        std::cin.clear();
-        std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
-    }
-    system("cls");
-    std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
-    std::cout << "Enter teacher's EI: ";
-    while(!(std::cin >> e))
-    {
-        system("cls");
-        std::cout << "Incorrect data type. Please enter an integer" << std::endl;
-        std::cout << std::endl;
-        std::cout << "Enter teacher's EI: ";
-        std::cin.clear();
-        std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
-    }
-    system("cls");
-    std::cout << "Enter teacher's fitness: ";
-    while(!(std::cin >> f))
-    {
-        system("cls");
-        std::cout << "Incorrect data type. Please enter an integer" << std::endl;
-        std::cout << std::endl;
-        std::cout << "Enter teacher's fitness: ";
-        std::cin.clear();
-        std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
-    }
-    system("cls");
+    input::intInput("Enter teacher's IQ: ", i);
+    input::intInput("Enter teacher's EQ: ", e);
+    input::intInput("Enter teacher's fitness: ", f);
     char teachSelect = '0';
     do
     {
         std::cout << "Select teacher's degree type: " << std::endl;
         std::cout << std::endl;
-        std::cout << "1. STEM" << std::endl;
-        std::cout << "2. Humanities" << std::endl;
-        std::cout << "3. Sports" << std::endl;
+        ui::optionPrint({"STEM", "Humanities", "Sport"});
         std::cin >> teachSelect;
             switch(teachSelect)
             {
@@ -80,9 +50,7 @@ void classroom::addTeacher()
                 }
                 default:
                 {
-                    system("cls");
-                    std::cout << "Invalid Entry: Use 1,2,3 to Select Option" << std::endl;
-                    std::cout << " " << std::endl;
+                    ui::invalidPrint(3);
                 }
             }
     }
@@ -120,43 +88,36 @@ void classroom::addTeacher()
     {
         std::cout << "Select teacher's teaching Style: " << std::endl;
         std::cout << std::endl;
-        std::cout << "1. Visual" << std::endl;
-        std::cout << "2. Auditory" << std::endl;
-        std::cout << "3. Reading/Writing" << std::endl;
-        std::cout << "4. Kinesthetic" << std::endl;
+        ui::optionPrint({"Visual", "Auditory", "Reading/Writing", "Kinesthetic"});
         std::cin >> teachSelect3;
-            switch(teachSelect3)
+        switch(teachSelect3)
+        {
+            case '1':
             {
-                case '1':
-                {
-                    t = "Visual";
-                    break;
-                }
-                case '2':
-                {
-                    t = "Auditory";
-                    break;
-                }
-                case '3':
-                {
-                    t = "Reading/Writing";
-                    break;
-                }
-                case '4':
-                {
-                    t = "Kinesthetic";
-                    break;
-                }
-                default:
-                {
-                    system("cls");
-                    std::cout << "Invalid Entry: Use 1,2,3,4 to Select Option" << std::endl;
-                    std::cout << " " << std::endl;
-                }
+                t = "Visual";
+                break;
             }
-    }
-    while(teachSelect3 != '1' && teachSelect3 != '2' && teachSelect3 != '3' && teachSelect3 != '4');
-    
+            case '2':
+            {
+                t = "Auditory";
+                break;
+            }
+            case '3':
+            {
+                t = "Reading/Writing";
+                break;
+            }
+            case '4':
+            {
+                t = "Kinesthetic";
+                break;
+            }
+            default:
+            {
+                ui::invalidPrint(4);
+            }
+        }
+    }while(teachSelect3 != '1' && teachSelect3 != '2' && teachSelect3 != '3' && teachSelect3 != '4');
 
     teacher newTeacher(n, i, e, f, d, s, t);
     teachers.push_back(newTeacher);
@@ -165,52 +126,20 @@ void classroom::addTeacher()
 void classroom::addStudent()
 {
     std::string n, home, breakAct, l;
-    int i, e, f;
+    int i = 0, e = 0, f = 0;
     bool d;
     std::cout << "Enter student's name: ";
     std::getline(std::cin, n);
     system("cls");
-    std::cout << "Enter student's IQ: ";
-    while(!(std::cin >> i))
-    {
-        system("cls");
-        std::cout << "Incorrect data type. Please enter an integer" << std::endl;
-        std::cout << std::endl;
-        std::cout << "Enter student's IQ: ";
-        std::cin.clear();
-        std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
-    }
-    system("cls");
-    std::cout << "Enter student's EI: ";
-    while(!(std::cin >> e))
-    {
-        system("cls");
-        std::cout << "Incorrect data type. Please enter an integer" << std::endl;
-        std::cout << std::endl;
-        std::cout << "Enter student's EI: ";
-        std::cin.clear();
-        std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
-    }
-    system("cls");
-    std::cout << "Enter student's fitness: ";
-    while(!(std::cin >> f))
-    {
-        system("cls");
-        std::cout << "Incorrect data type. Please enter an integer" << std::endl;
-        std::cout << std::endl;
-        std::cout << "Enter student's fitness: ";
-        std::cin.clear();
-        std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
-    }
-    system("cls");
+    input::intInput("Enter student's IQ: ", i);
+    input::intInput("Enter student's EI: ", e);
+    input::intInput("Enter student's fitness: ", f);
     char stuSelect = '0';
     do
     {
         std::cout << "Select student's preferred out-of-school activity: " << std::endl;
         std::cout << std::endl;
-        std::cout << "1. Mental Activities (e.g. video games, puzzles, board games) " << std::endl;
-        std::cout << "2. Creative Activities (e.g. painting, music creation, reading) " << std::endl;
-        std::cout << "3. Physical Activities (e.g sports, rock climbing, leg presses) " << std::endl;
+        ui::optionPrint({"Mental Activities (e.g. video games, puzzles, board games)", "Creative Activities (e.g. painting, music creation, reading)", "Physical Activities (e.g sports, rock climbing, leg presses)"});
         std::cin >> stuSelect;
         switch(stuSelect)
         {
@@ -231,9 +160,7 @@ void classroom::addStudent()
             }
             default:
             {
-                system("cls");
-                std::cout << "Invalid Entry: Use 1,2,3 to Select Option" << std::endl;
-                std::cout << " " << std::endl;
+                ui::invalidPrint(3);
             }
         }
     }
@@ -244,9 +171,7 @@ void classroom::addStudent()
     {
         std::cout << "Enter student's preferred breaktime activity: " << std::endl;
         std::cout << std::endl;
-        std::cout << "1. Study " << std::endl;
-        std::cout << "2. Socialising " << std::endl;
-        std::cout << "3. Sports " << std::endl;
+        ui::optionPrint({"Study", "Socialising", "Sports"});
         std::cin >> stuSelect2;
         switch(stuSelect2)
         {
@@ -267,9 +192,7 @@ void classroom::addStudent()
             }
             default:
             {
-                system("cls");
-                std::cout << "Invalid Entry: Use 1,2,3 to Select Option" << std::endl;
-                std::cout << " " << std::endl;
+                ui::invalidPrint(3);
             }
         }
     }
@@ -307,10 +230,7 @@ void classroom::addStudent()
     {
         std::cout << "Select student's learning style: " << std::endl;
         std::cout << std::endl;
-        std::cout << "1. Visual" << std::endl;
-        std::cout << "2. Auditory" << std::endl;
-        std::cout << "3. Reading/Writing" << std::endl;
-        std::cout << "4. Kinesthetic" << std::endl;
+        ui::optionPrint({"Visual", "Auditory", "Reading/Writing", "Kinesthetic"});
         std::cin >> stuSelect4;
         switch(stuSelect4)
         {
@@ -336,9 +256,7 @@ void classroom::addStudent()
             }
             default:
             {
-                system("cls");
-                std::cout << "Invalid Entry: Use 1,2,3,4 to Select Option" << std::endl;
-                std::cout << " " << std::endl;
+                ui::invalidPrint(4);
             }
         }
     }
@@ -347,6 +265,18 @@ void classroom::addStudent()
     student newStudent(n, i, e, f, home, breakAct, d, l);
     students.push_back(newStudent);
 }
+
+void classroom::setClassroomTeacher(std::string n)
+{
+    for(int i = 0; i < teachers.size(); i++)
+    {
+        if(teachers[i].getName() == n)
+        {
+            classroomTeacher = teachers[i];
+        }
+    }
+}
+
 
 void classroom::viewTeachers()
 {
@@ -382,17 +312,6 @@ void classroom::viewStudents()
     std::cout << std::endl;
 }
 
-void classroom::setClassroomTeacher(std::string n)
-{
-    for(int i = 0; i < teachers.size(); i++)
-    {
-        if(teachers[i].getName() == n)
-        {
-            classroomTeacher = teachers[i];
-        }
-    }
-}
-
 void classroom::viewClassroom()
 {
     bool teacherSelected = false;
@@ -424,10 +343,11 @@ void classroom::viewClassroom()
     std::cout << std::endl;
 }
 
+
 void classroom::generateClassroom()
 {
     std::string nTeacher, dTeacher, tTeacher, line;
-    int iTeacher, eTeacher, fTeacher, numOfLines = 0;
+    int numOfLines = 0;
     bool sTeacher;
 
     std::ifstream myfile("exampleTeachers.txt");
@@ -438,9 +358,9 @@ void classroom::generateClassroom()
     for(int j = 0; j < numOfLines ; j++)
     {
         std::getline(input, nTeacher);
-        iTeacher = rand() % (131 - 69) + 69;
-        eTeacher = rand() % (131 - 69) + 69;
-        fTeacher = rand() % (131 - 69) + 69;
+        int iTeacher = rand() % (131 - 69) + 69;
+        int eTeacher = rand() % (131 - 69) + 69;
+        int fTeacher = rand() % (131 - 69) + 69;
 
         int zeroOneOrTwo = rand() % 3;
         if(zeroOneOrTwo == 0)
@@ -493,7 +413,7 @@ void classroom::generateClassroom()
 
 
     std::string nStudent, home, breakAct, l, line2;
-    int iStudent, eStudent, fStudent, numOfLines2 = 0;
+    int numOfLines2 = 0;
     bool dStudent;
 
     std::ifstream myfile2("exampleStudents.txt");
@@ -503,9 +423,9 @@ void classroom::generateClassroom()
     for(int j = 0; j < numOfLines2 ; j++)
     {
         std::getline(input2, nStudent);
-        iStudent = rand() % (131 - 69) + 69;
-        eStudent = rand() % (131 - 69) + 69;
-        fStudent = rand() % (131 - 69) + 69;
+        int iStudent = rand() % (131 - 69) + 69;
+        int eStudent = rand() % (131 - 69) + 69;
+        int fStudent = rand() % (131 - 69) + 69;
 
         int zeroOneOrTwo2 = rand() % 3;
         if(zeroOneOrTwo2 == 0)
@@ -568,6 +488,19 @@ void classroom::generateClassroom()
     }
 }
 
+
+int classroom::getMonth()
+{
+    return month;
+}
+
+void classroom::addMonthInfo(int av, int m, int e, int p)
+{
+    std::vector<int> monthInfo = {month, av, m, e, p};
+    monthsInfo.push_back(monthInfo);
+}
+
+
 void classroom::predictResults()
 {
     int numOfPasses = 0, numOfMathsPasses = 0, numOfEngPasses = 0, numOfPePasses = 0;
@@ -618,12 +551,12 @@ void classroom::predictResults()
             numOfFails++;
             numOfPeFails++;
         }
-        students[i].setTempGrades(m, e, p);        
+        students[i].setGrades(m, e, p);        
     }
-    tempPredictedPassRate = (100*numOfPasses)/(numOfPasses+numOfFails);
-    tempPredictedMathsPassRate = (100*numOfMathsPasses)/(numOfMathsPasses+numOfMathsFails);
-    tempPredictedEngPassRate = (100*numOfEngPasses)/(numOfEngPasses+numOfEngFails);
-    tempPredictedPePassRate = (100*numOfPePasses)/(numOfPePasses+numOfPeFails);
+    predictedPassRate = (100*numOfPasses)/(numOfPasses+numOfFails);
+    predictedMathsPassRate = (100*numOfMathsPasses)/(numOfMathsPasses+numOfMathsFails);
+    predictedEngPassRate = (100*numOfEngPasses)/(numOfEngPasses+numOfEngFails);
+    predictedPePassRate = (100*numOfPePasses)/(numOfPePasses+numOfPeFails);
 }
 
 void classroom::viewPredictedResults()
@@ -637,38 +570,24 @@ void classroom::viewPredictedResults()
     std::cout << std::endl;
     for(int i = 0; i < students.size(); i++)
     {
-        std::cout << std::setw(20) << students[i].getName() << std::setw(20) << students[i].getTempMathsGrade()
-        << std::setw(20) << students[i].getTempEngGrade() << std::setw(20) << students[i].getTempPeGrade() << std::endl;
+        std::cout << std::setw(20) << students[i].getName() << std::setw(20) << students[i].getMathsGrade()
+        << std::setw(20) << students[i].getEngGrade() << std::setw(20) << students[i].getPeGrade() << std::endl;
     }
     std::cout << std::endl;
-    std::cout << std::setw(60) << "Predicted Average Pass Rate: " << tempPredictedPassRate << "%" << std::endl;
+    std::cout << std::setw(60) << "Predicted Average Pass Rate: " << predictedPassRate << "%" << std::endl;
     std::cout << std::endl;
-    std::cout << std::setw(60) << "Predicted Maths Pass Rate: " << tempPredictedMathsPassRate << "%" << std::endl;
-    std::cout << std::setw(60) << "Predicted English Pass Rate: " << tempPredictedEngPassRate << "%" << std::endl;
-    std::cout << std::setw(60) << "Predicted PE Pass Rate: " << tempPredictedPePassRate << "%" << std::endl;
+    std::cout << std::setw(60) << "Predicted Maths Pass Rate: " << predictedMathsPassRate << "%" << std::endl;
+    std::cout << std::setw(60) << "Predicted English Pass Rate: " << predictedEngPassRate << "%" << std::endl;
+    std::cout << std::setw(60) << "Predicted PE Pass Rate: " << predictedPePassRate << "%" << std::endl;
 }
 
 void classroom::setPridictedResults()
 {
-    for(int i = 0; i < students.size(); i++)
-    {
-        std::string m = students[i].getTempMathsGrade();
-        std::string e = students[i].getTempEngGrade();
-        std::string f = students[i].getTempEngGrade();
-        students[i].setGrades(m, e, f);
-    }
-
-    predictedPassRate = tempPredictedPassRate;
-    predictedMathsPassRate = tempPredictedMathsPassRate;
-    predictedEngPassRate = tempPredictedEngPassRate;
-    predictedPePassRate = tempPredictedPePassRate;
-
-    addTermInfo(predictedPassRate, predictedMathsPassRate, predictedEngPassRate, predictedPePassRate);
-
-    term++;
+    addMonthInfo(predictedPassRate, predictedMathsPassRate, predictedEngPassRate, predictedPePassRate);
+    month++;
 }
 
-void classroom::progressTerm()
+void classroom::progressMonth()
 {
     //Classroom teacher effect
     int iqIncrease = 0, eiIncrease = 0, fitnessIncrease = 0;
@@ -676,7 +595,7 @@ void classroom::progressTerm()
     if(classroomTeacher.getIQ() < 85) {iqIncrease = -1;}
     else if(classroomTeacher.getIQ() >= 85 && classroomTeacher.getIQ() < 100) {iqIncrease = 0;}
     else if(classroomTeacher.getIQ() >= 100 && classroomTeacher.getIQ() < 115) {iqIncrease = 1;}
-    else {iqIncrease = 1;}
+    else {iqIncrease = 2;}
 
     if(classroomTeacher.getEI() < 85) {eiIncrease = -1;}
     else if(classroomTeacher.getEI() >= 85 && classroomTeacher.getEI() < 100) {eiIncrease = 0;}
@@ -717,12 +636,6 @@ void classroom::progressTerm()
     }
 }
 
-void classroom::addTermInfo(int av, int m, int e, int p)
-{
-    std::vector<int> termInfo = {term, av, m, e, p};
-    termsInfo.push_back(termInfo);
-}
-
 void classroom::makeTeacherSubRecommendations()
 {   
     teacher tempHoldClassroomTeacher = classroomTeacher;
@@ -742,11 +655,11 @@ void classroom::makeTeacherSubRecommendations()
         int eiChange = 0;
         int fitnessChange = 0;
 
-        progressTerm();
+        progressMonth();
         for(int j = 0; j < students.size(); j++)
         {
-            averageChange = averageChange + ((students[j].getIQ() + students[j].getEI() + students[j].getFitness()) / 3) 
-                          - ((tempHoldStudents[j].getIQ() + tempHoldStudents[j].getEI() + tempHoldStudents[j].getFitness()) / 3);
+            averageChange = averageChange + ((students[j].getIQ() + students[j].getEI() + students[j].getFitness()) / 3)
+                        - ((tempHoldStudents[j].getIQ() + tempHoldStudents[j].getEI() + tempHoldStudents[j].getFitness()) / 3);
 
             
             iqChange = iqChange + (students[j].getIQ() - tempHoldStudents[j].getIQ());
@@ -856,12 +769,12 @@ void classroom::makeTeacherSubRecommendations()
 
 void classroom::progressGraph()
 {
-    std::vector<std::vector<int>> holdTermsInfo = termsInfo;
+    std::vector<std::vector<int>> holdMonthsInfo = monthsInfo;
     predictResults();
-    std::vector<int> currentTermInfo = {term, tempPredictedPassRate, tempPredictedMathsPassRate, tempPredictedEngPassRate, tempPredictedPePassRate};
-    termsInfo.push_back(currentTermInfo);
+    std::vector<int> currentMonthInfo = {month, predictedPassRate, predictedMathsPassRate, predictedEngPassRate, predictedPePassRate};
+    monthsInfo.push_back(currentMonthInfo);
 
-    int col = term + 1;
+    int col = month + 1;
     int max = 25;    
 
     char graphSelect = '0';
@@ -871,11 +784,7 @@ void classroom::progressGraph()
         std::cout << "/__|_)|_||_)|_|(_ " << std::endl;
         std::cout << "\\_|| \\| ||  | |__)" << std::endl;
         std::cout << std::endl;
-        std::cout << "1. Pass Rate" << std::endl;
-        std::cout << "2. Maths Pass Rate" << std::endl;
-        std::cout << "3. English Pass Rate" << std::endl;
-        std::cout << "4. PE Pass Rate" << std::endl;
-        std::cout << "5. Return" << std::endl;
+        ui::optionPrint({"Pass Rate", "Maths Pass Rate", "English Pass Rate", "PE Pass Rate", "Return"});;
         std::cin >> graphSelect;
         switch(graphSelect)
         {
@@ -890,12 +799,12 @@ void classroom::progressGraph()
                 {
                     for(int c = 0; c < col; ++c)
                     {
-                        std::cout << (r + ((termsInfo[c][1])/4) >= max ? " ** " : "    ");
+                        std::cout << (r + ((monthsInfo[c][1])/4) >= max ? " ** " : "    ");
                     }
                     std::cout << std::endl;
                 }
                 std::cout << " 1  " << " 2  " << " 3  " << " 4  " << " 5  " << " 6  " << " 7  " << " 8  " << " 9  " << " 10 " << " 11 " << " 12 " << std::endl;
-                std::cout << std::setw(27) << "Terms" << std::endl;
+                std::cout << std::setw(27) << "Month" << std::endl;
                 std::cout << std::setw(30) << "('**' = 4%)" << std::endl;
                 std::cout << std::endl;
                 system("pause");
@@ -913,12 +822,12 @@ void classroom::progressGraph()
                 {
                     for(int c = 0; c < col; ++c)
                     {
-                        std::cout << (r + ((termsInfo[c][2])/4) >= max ? " ** " : "    ");
+                        std::cout << (r + ((monthsInfo[c][2])/4) >= max ? " ** " : "    ");
                     }
                     std::cout << std::endl;
                 }
                 std::cout << " 1  " << " 2  " << " 3  " << " 4  " << " 5  " << " 6  " << " 7  " << " 8  " << " 9  " << " 10 " << " 11 " << " 12 " << std::endl;
-                std::cout << std::setw(27) << "Terms" << std::endl;
+                std::cout << std::setw(27) << "Month" << std::endl;
                 std::cout << std::setw(30) << "('**' = 4%)" << std::endl;
                 std::cout << std::endl;
                 system("pause");
@@ -936,12 +845,12 @@ void classroom::progressGraph()
                 {
                     for(int c = 0; c < col; ++c)
                     {
-                        std::cout << (r + ((termsInfo[c][3])/4) >= max ? " ** " : "    ");
+                        std::cout << (r + ((monthsInfo[c][3])/4) >= max ? " ** " : "    ");
                     }
                     std::cout << std::endl;
                 }
                 std::cout << " 1  " << " 2  " << " 3  " << " 4  " << " 5  " << " 6  " << " 7  " << " 8  " << " 9  " << " 10 " << " 11 " << " 12 " << std::endl;
-                std::cout << std::setw(27) << "Terms" << std::endl;
+                std::cout << std::setw(27) << "Month" << std::endl;
                 std::cout << std::setw(30) << "('**' = 4%)" << std::endl;
                 std::cout << std::endl;
                 system("pause");
@@ -959,12 +868,12 @@ void classroom::progressGraph()
                 {
                     for(int c = 0; c < col; ++c)
                     {
-                        std::cout << (r + ((termsInfo[c][4])/4) >= max ? " ** " : "    ");
+                        std::cout << (r + ((monthsInfo[c][4])/4) >= max ? " ** " : "    ");
                     }
                     std::cout << std::endl;
                 }
                 std::cout << " 1  " << " 2  " << " 3  " << " 4  " << " 5  " << " 6  " << " 7  " << " 8  " << " 9  " << " 10 " << " 11 " << " 12 " << std::endl;
-                std::cout << std::setw(27) << "Terms" << std::endl;
+                std::cout << std::setw(27) << "Month" << std::endl;
                 std::cout << std::setw(30) << "('**' = 4%)" << std::endl;
                 std::cout << std::endl;
                 system("pause");
@@ -978,16 +887,9 @@ void classroom::progressGraph()
             }
             default:
             {
-                system("cls");
-                std::cout << "Invalid Entry: Use 1,2,3,4 to Select Option" << std::endl;
-                std::cout << " " << std::endl;
+                ui::invalidPrint(4);
             }
         }    
     }
-    termsInfo = holdTermsInfo;
-}
-
-int classroom::getTerm()
-{
-    return term;
+    monthsInfo = holdMonthsInfo;
 }

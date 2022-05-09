@@ -13,9 +13,8 @@ class teacher : public person
         std::string teachingStyle;
     
     public:
-        teacher();   //Why did I have to create this???
+        teacher();
         teacher(std::string, int, int, int, std::string, bool, std::string);
-        //teacher(name, iq, ei, fitness, degreeType, isStrict, teahcingStyle)
 
         std::string getDegreeType();
         bool getIsStrict();

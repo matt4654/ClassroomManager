@@ -2,26 +2,45 @@
 
 #include <string>
 
-//Set and get name
+void person::setName(std::string n)
+{
+    name = n;
+}
 
-void person::setName(std::string n) { name = n; }
+std::string person::getName()
+{
+    return name;
+}
 
-std::string person::getName() { return name; }
 
-//Set and get IQ
+void person::setIQ(int i)
+{
+    iq = i;
+}
 
-void person::setIQ(int i) { iq = i; }
+int person::getIQ()
+{
+    return iq;
+}
 
-int person::getIQ() { return iq; }
 
-//Set and get EI
+void person::setEI(int e)
+{
+    ei = e;
+}
 
-void person::setEI(int e) { ei = e; }
+int person::getEI()
+{
+    return ei;
+}
 
-int person::getEI() { return ei; }
 
-//Set and get fitnes
+void person::setFitness(int fit)
+{
+    fitness = fit;
+}
 
-void person::setFitness(int fit) { fitness = fit; }
-
-int person::getFitness() { return fitness; }
+int person::getFitness()
+{
+    return fitness;
+}

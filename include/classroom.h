@@ -11,18 +11,15 @@ class classroom
         std::vector<teacher> teachers; 
         std::vector<student> students;
 
-        int tempPredictedPassRate = 0;
-        int tempPredictedMathsPassRate = 0;
-        int tempPredictedEngPassRate = 0;
-        int tempPredictedPePassRate = 0;
-
         int predictedPassRate;
         int predictedMathsPassRate;
         int predictedEngPassRate;
         int predictedPePassRate;
 
-        int term = 0;
-        std::vector<std::vector<int>> termsInfo;
+        int month = 0;
+        std::vector<std::vector<int>> monthsInfo;
+        void addMonthInfo(int, int, int, int);
+
 
     public:
         void addTeacher();
@@ -35,13 +32,12 @@ class classroom
 
         void generateClassroom();
 
-        void predictResults();
-        void setPridictedResults();
-        void viewPredictedResults();
-        void progressTerm();
-        void addTermInfo(int, int, int, int);
-        int getTerm();
+        int getMonth();
 
+        void predictResults();
+        void viewPredictedResults();
+        void setPridictedResults();
+        void progressMonth();       
         void makeTeacherSubRecommendations();
         void progressGraph();
 };

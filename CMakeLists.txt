@@ -17,6 +17,7 @@ add_executable(
     src/person.cpp
     src/student.cpp
     src/teacher.cpp
+    src/utilities.cpp
 )
 
 target_compile_features(${PROJECT_NAME} PUBLIC cxx_std_20)
